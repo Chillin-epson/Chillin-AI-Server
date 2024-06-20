@@ -1,7 +1,3 @@
-# Copyright (c) Meta Platforms, Inc. and affiliates.
-# This source code is licensed under the MIT license found in the
-# LICENSE file in the root directory of this source tree.
-
 import animated_drawings.render
 import logging
 from pathlib import Path
@@ -11,9 +7,11 @@ from pkg_resources import resource_filename
 
 
 def annotations_to_animation(char_anno_dir: str, motion_cfg_fn: str, retarget_cfg_fn: str):
+    print("annotations_to_animation starts now")
+    logging.info("annotations_to_animation starts now")
     """
     Given a path to a directory with character annotations, a motion configuration file, and a retarget configuration file,
-    creates an animation and saves it to {annotation_dir}/video.png
+    creates an animation and saves it to {annotation_dir}/video.gif
     """
 
     # package character_cfg_fn, motion_cfg_fn, and retarget_cfg_fn
@@ -22,6 +20,10 @@ def annotations_to_animation(char_anno_dir: str, motion_cfg_fn: str, retarget_cf
         'motion_cfg': str(Path(motion_cfg_fn).resolve()),
         'retarget_cfg': str(Path(retarget_cfg_fn).resolve())
     }
+
+    logging.debug(f"Character config: {animated_drawing_dict['character_cfg']}")
+    logging.debug(f"Motion config: {animated_drawing_dict['motion_cfg']}")
+    logging.debug(f"Retarget config: {animated_drawing_dict['retarget_cfg']}")
 
     # create mvc config
     mvc_cfg = {
@@ -36,12 +38,15 @@ def annotations_to_animation(char_anno_dir: str, motion_cfg_fn: str, retarget_cf
     with open(output_mvc_cfn_fn, 'w') as f:
         yaml.dump(dict(mvc_cfg), f)
 
+    logging.debug(f"MVC config file written to: {output_mvc_cfn_fn}")
+
     # render the video
+    logging.info("Starting rendering process")
     animated_drawings.render.start(output_mvc_cfn_fn)
+    logging.info("Rendering process completed")
 
 
 if __name__ == '__main__':
-
     log_dir = Path('./logs')
     log_dir.mkdir(exist_ok=True, parents=True)
     logging.basicConfig(filename=f'{log_dir}/log.txt', level=logging.DEBUG)

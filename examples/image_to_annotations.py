@@ -14,7 +14,8 @@ import yaml
 import logging
 
 
-def image_to_annotations(img_fn: str, out_dir: str) -> None:
+def image_to_annotations(img: any, out_dir: str) -> None:
+    print("image_to_annotations starts now")
     """
     Given the RGB image located at img_fn, runs detection, segmentation, and pose estimation for drawn character within it.
     Crops the image and saves texture, mask, and character config files necessary for animation. Writes to out_dir.
@@ -27,9 +28,6 @@ def image_to_annotations(img_fn: str, out_dir: str) -> None:
     # create output directory
     outdir = Path(out_dir)
     outdir.mkdir(exist_ok=True)
-
-    # read image
-    img = cv2.imread(img_fn)
 
     # copy the original image into the output_dir
     cv2.imwrite(str(outdir/'image.png'), img)
@@ -217,12 +215,3 @@ def segment(img: np.ndarray):
 
     return mask.T
 
-
-if __name__ == '__main__':
-    log_dir = Path('./logs')
-    log_dir.mkdir(exist_ok=True, parents=True)
-    logging.basicConfig(filename=f'{log_dir}/log.txt', level=logging.DEBUG)
-
-    img_fn = sys.argv[1]
-    out_dir = sys.argv[2]
-    image_to_annotations(img_fn, out_dir)

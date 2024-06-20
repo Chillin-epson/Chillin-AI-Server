@@ -2,8 +2,8 @@
 # This source code is licensed under the MIT license found in the
 # LICENSE file in the root directory of this source tree.
 
-from image_to_annotations import image_to_annotations
-from annotations_to_animation import annotations_to_animation
+from .image_to_annotations import image_to_annotations
+from .annotations_to_animation import annotations_to_animation
 from pathlib import Path
 import logging
 import sys
@@ -32,7 +32,7 @@ if __name__ == '__main__':
     if len(sys.argv) > 3:
         motion_cfg_fn = sys.argv[3]
     else:
-        motion_cfg_fn = resource_filename(__name__, 'config/motion/dab.yaml')
+        motion_cfg_fn = resource_filename(__name__, 'config/motion/wave_hello.yaml')
     if len(sys.argv) > 4:
         retarget_cfg_fn = sys.argv[4]
     else:
