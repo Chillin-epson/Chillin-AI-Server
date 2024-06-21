@@ -3,9 +3,6 @@ from fastapi.responses import FileResponse
 from pathlib import Path
 
 from examples.convert_to_GIF import convert_to_GIF
-import cv2
-import numpy as np
-
 from services.img_to_np import img_to_np
 
 motion =  APIRouter()
