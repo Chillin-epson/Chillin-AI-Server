@@ -5,8 +5,6 @@
 from .image_to_annotations import image_to_annotations
 from .annotations_to_animation import annotations_to_animation
 from pathlib import Path
-import logging
-import sys
 from pkg_resources import resource_filename
 
 
